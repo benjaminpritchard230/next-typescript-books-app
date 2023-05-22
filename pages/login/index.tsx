@@ -1,3 +1,4 @@
+import { useLoginMutation } from "@/features/api/apiSlice";
 import { setCredentials } from "@/features/auth/authSlice";
 import { RootState } from "@/store/store";
 import React, { useState } from "react";
@@ -8,6 +9,8 @@ type Props = {};
 const Login = (props: Props) => {
   const dispatch = useDispatch();
   const auth = useSelector((state: RootState) => state.auth);
+
+  const [login, { isLoading, error }] = useLoginMutation();
 
   const [formData, setFormData] = useState({
     email: "",
@@ -26,14 +29,12 @@ const Login = (props: Props) => {
 
   const onSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
-    const response = await fetch("http://localhost:8000/api/users/login");
-    const jsonData = response.json();
-    console.log(jsonData);
-
-    const userData = {
-      email,
-      password,
-    };
+    try {
+      const user = await login(formData).unwrap();
+      dispatch(setCredentials(user));
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
