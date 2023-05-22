@@ -31,7 +31,7 @@ const Library = (props: Props) => {
 
       <ul>
         {bookData?.map((book: IBook) => {
-          return <li>{book.title}</li>;
+          return <li key={book._id}>{book.title}</li>;
         })}
       </ul>
     </>
