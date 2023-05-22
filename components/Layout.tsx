@@ -1,7 +1,9 @@
+import Navbar from "./Navbar";
+
 export default function Layout({ children }: any) {
   return (
     <>
-      <h1>Top</h1>
+      <Navbar />
       <main>{children}</main>
       <h1>Bottom</h1>
     </>
