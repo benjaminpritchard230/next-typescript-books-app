@@ -1,3 +1,4 @@
+import Layout from "@/components/Layout";
 import { store } from "@/store/store";
 import type { NextPage } from "next";
 import type { AppProps } from "next/app";
@@ -14,7 +15,7 @@ type AppPropsWithLayout = AppProps & {
 
 export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   // Use the layout defined at the page level, if available
-  const getLayout = Component.getLayout ?? ((page) => page);
+  const getLayout = Component.getLayout ?? ((page) => <Layout>{page}</Layout>);
 
   return (
     <Provider store={store}>{getLayout(<Component {...pageProps} />)}</Provider>
