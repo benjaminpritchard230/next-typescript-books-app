@@ -9,12 +9,12 @@ export const booksApi = createApi({
     prepareHeaders: (headers, { getState }) => {
       const token = (getState() as RootState).auth.token;
       if (token) {
-        headers.set("authorization", `Token ${token}`);
+        headers.set("authorization", `Bearer ${token}`);
       }
       return headers;
     },
   }),
-  tagTypes: ["User"],
+  tagTypes: ["User", "Books"],
   endpoints: (builder) => ({
     login: builder.mutation({
       query: (credentials) => ({
@@ -31,7 +31,26 @@ export const booksApi = createApi({
         body: credentials,
       }),
     }),
+    getBooks: builder.query({
+      query: () => ({
+        url: "books/",
+        method: "GET",
+      }),
+    }),
+    addBook: builder.mutation({
+      query: (bookData) => ({
+        url: "books/",
+        method: "POST",
+        body: bookData,
+      }),
+      invalidatesTags: ["Books"],
+    }),
   }),
 });
 
-export const { useLoginMutation, useRegisterMutation } = booksApi;
+export const {
+  useLoginMutation,
+  useRegisterMutation,
+  useAddBookMutation,
+  useGetBooksQuery,
+} = booksApi;
