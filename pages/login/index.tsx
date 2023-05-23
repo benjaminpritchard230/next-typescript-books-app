@@ -1,6 +1,7 @@
 import { useLoginMutation } from "@/features/api/apiSlice";
 import { setCredentials } from "@/features/auth/authSlice";
 import { RootState } from "@/store/store";
+import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -9,6 +10,7 @@ type Props = {};
 const Login = (props: Props) => {
   const dispatch = useDispatch();
   const auth = useSelector((state: RootState) => state.auth);
+  const router = useRouter();
 
   const [login, { isLoading, error }] = useLoginMutation();
 
@@ -32,6 +34,7 @@ const Login = (props: Props) => {
     try {
       const user = await login(formData).unwrap();
       dispatch(setCredentials(user));
+      router.push("/");
     } catch (err) {
       console.log(err);
     }
