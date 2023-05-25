@@ -15,8 +15,8 @@ const Login = (props: Props) => {
   const [login, { isLoading, error }] = useLoginMutation();
 
   const [formData, setFormData] = useState({
-    email: "",
-    password: "",
+    email: "ben@ben.com",
+    password: "benben11",
   });
 
   const { email, password } = formData;
