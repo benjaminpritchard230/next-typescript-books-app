@@ -37,6 +37,12 @@ export const booksApi = createApi({
         method: "GET",
       }),
     }),
+    getBook: builder.query({
+      query: (data) => ({
+        url: `books/isbn/${data.isbn}`,
+        method: "GET",
+      }),
+    }),
     addBook: builder.mutation({
       query: (bookData) => ({
         url: "books/",
@@ -53,4 +59,5 @@ export const {
   useRegisterMutation,
   useAddBookMutation,
   useGetBooksQuery,
+  useGetBookQuery,
 } = booksApi;
