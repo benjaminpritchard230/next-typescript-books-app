@@ -1,5 +1,6 @@
 import { useGetBooksQuery } from "@/features/api/apiSlice";
 import { RootState } from "@/store/store";
+import Link from "next/link";
 import React from "react";
 import { useSelector } from "react-redux";
 
@@ -31,7 +32,11 @@ const Library = (props: Props) => {
 
       <ul>
         {bookData?.map((book: IBook) => {
-          return <li key={book._id}>{book.title}</li>;
+          return (
+            <Link key={book._id} href={`/book/${book.isbn}`}>
+              <li>{book.title}</li>
+            </Link>
+          );
         })}
       </ul>
     </>
