@@ -29,7 +29,11 @@ const BookDetails = ({ data }: Props) => {
     <>
       <p>Showing details for &quot;{data.title}&quot;</p>
       <p>ISBN: {router.query.slug}</p>
-      <p>{error ? "You have not added this book to your library." : ""}</p>
+      <p>
+        {error
+          ? "You have not added this book to your library."
+          : "This book is in your library."}
+      </p>
     </>
   );
 };
