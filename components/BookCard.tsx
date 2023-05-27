@@ -14,10 +14,24 @@ const BookCard = ({ book }: Props) => {
     deleteBook({ id: book._id });
   };
 
+  const convertToYear = (date: string): number | null => {
+    const year = parseInt(date.substring(0, 4));
+
+    if (isNaN(year)) {
+      return null;
+    }
+
+    return year;
+  };
+
+  const data = book.data;
+
   return (
     <>
-      <Link key={book._id} href={`/book/${book.isbn}`}>
-        <p>{book.title}</p>
+      <Link key={book._id} href={`/book/${book._id}`}>
+        <p>
+          {data.title}&nbsp;({convertToYear(data.publish_date)})
+        </p>
       </Link>
       <button
         onClick={() => {
