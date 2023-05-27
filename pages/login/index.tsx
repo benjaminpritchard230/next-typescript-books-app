@@ -7,6 +7,17 @@ import { useDispatch, useSelector } from "react-redux";
 
 type Props = {};
 
+export interface ILoginFormData {
+  email: string;
+  password: string;
+}
+export interface ILoginResponse {
+  _id: string;
+  name: string;
+  email: string;
+  token: string;
+}
+
 const Login = (props: Props) => {
   const dispatch = useDispatch();
   const auth = useSelector((state: RootState) => state.auth);
@@ -14,7 +25,7 @@ const Login = (props: Props) => {
 
   const [login, { isLoading, error }] = useLoginMutation();
 
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<ILoginFormData>({
     email: "ben@ben.com",
     password: "benben11",
   });
@@ -32,7 +43,7 @@ const Login = (props: Props) => {
   const onSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
     try {
-      const user = await login(formData).unwrap();
+      const user: ILoginResponse = await login(formData).unwrap();
       dispatch(setCredentials(user));
       router.push("/");
     } catch (err) {
