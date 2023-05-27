@@ -1,4 +1,10 @@
+import { IAddBookFormData } from "@/pages/add-book";
+import { ILoginFormData, ILoginResponse } from "@/pages/login";
+import { IRegisterFormData, IRegisterResponse } from "@/pages/register";
 import type { RootState } from "@/store/store";
+import { IAddBookResponse } from "@/types/addBookResponse";
+import { IDeleteBookResponse } from "@/types/deleteBookResponse";
+import { IUserBook, IUserLibrary } from "@/types/userBooks";
 
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
@@ -16,7 +22,20 @@ export const booksApi = createApi({
   }),
   tagTypes: ["User", "Books"],
   endpoints: (builder) => ({
-    login: builder.mutation({
+    getBooks: builder.query<IUserLibrary, null>({
+      query: () => ({
+        url: "books/",
+        method: "GET",
+      }),
+      providesTags: ["Books"],
+    }),
+    getBook: builder.query<IUserBook[], any>({
+      query: (data) => ({
+        url: `books/isbn/${data.isbn}`,
+        method: "GET",
+      }),
+    }),
+    login: builder.mutation<ILoginResponse, ILoginFormData>({
       query: (credentials) => ({
         url: "users/login",
         method: "POST",
@@ -24,27 +43,14 @@ export const booksApi = createApi({
       }),
       invalidatesTags: ["User"],
     }),
-    register: builder.mutation({
+    register: builder.mutation<IRegisterResponse, IRegisterFormData>({
       query: (credentials) => ({
         url: "users/",
         method: "POST",
         body: credentials,
       }),
     }),
-    getBooks: builder.query({
-      query: () => ({
-        url: "books/",
-        method: "GET",
-      }),
-      providesTags: ["Books"],
-    }),
-    getBook: builder.query({
-      query: (data) => ({
-        url: `books/isbn/${data.isbn}`,
-        method: "GET",
-      }),
-    }),
-    addBook: builder.mutation({
+    addBook: builder.mutation<IAddBookResponse, IAddBookFormData>({
       query: (bookData) => ({
         url: "books/",
         method: "POST",
@@ -52,7 +58,7 @@ export const booksApi = createApi({
       }),
       invalidatesTags: ["Books"],
     }),
-    deleteBook: builder.mutation({
+    deleteBook: builder.mutation<IDeleteBookResponse, { id: string }>({
       query: (bookData) => ({
         url: `books/${bookData.id}`,
         method: "DELETE",
@@ -64,10 +70,10 @@ export const booksApi = createApi({
 });
 
 export const {
+  useGetBooksQuery,
+  useGetBookQuery,
   useLoginMutation,
   useRegisterMutation,
   useAddBookMutation,
-  useGetBooksQuery,
-  useGetBookQuery,
   useDeleteBookMutation,
 } = booksApi;
