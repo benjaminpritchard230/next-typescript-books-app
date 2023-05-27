@@ -8,17 +8,24 @@ import { toast } from "react-toastify";
 
 type Props = {};
 
-export interface FormData {
+export interface IRegisterFormData {
   name?: string;
   email: string;
   password: string;
   password2?: string;
 }
 
+export interface IRegisterResponse {
+  _id: string;
+  name: string;
+  email: string;
+  token: string;
+}
+
 const Register = (props: Props) => {
   const dispatch = useDispatch<AppDispatch>();
 
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<IRegisterFormData>({
     name: "",
     email: "",
     password: "",
@@ -45,7 +52,7 @@ const Register = (props: Props) => {
       console.log("Passwords don't match");
     } else
       try {
-        const user = await register(formData).unwrap();
+        const user: IRegisterResponse = await register(formData).unwrap();
         dispatch(setCredentials(user));
       } catch (err) {
         console.log(err);
