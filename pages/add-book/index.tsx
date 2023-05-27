@@ -1,10 +1,15 @@
 import { useAddBookMutation } from "@/features/api/apiSlice";
 import { setCredentials } from "@/features/auth/authSlice";
 import { RootState } from "@/store/store";
+import { IAddBookResponse } from "@/types/addBookResponse";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 type Props = {};
+
+export interface IAddBookFormData {
+  isbn: string;
+}
 
 const AddBook = (props: Props) => {
   const dispatch = useDispatch();
@@ -12,7 +17,7 @@ const AddBook = (props: Props) => {
 
   const [addBook] = useAddBookMutation();
 
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<IAddBookFormData>({
     isbn: "",
   });
 
@@ -31,8 +36,8 @@ const AddBook = (props: Props) => {
   const onSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
     try {
-      const book = await addBook(formData).unwrap();
-      setBookTitle(book.title);
+      const book: IAddBookResponse = await addBook(formData).unwrap();
+      setBookTitle(book.data.title);
       console.log(book);
     } catch (err) {
       console.log(err);
