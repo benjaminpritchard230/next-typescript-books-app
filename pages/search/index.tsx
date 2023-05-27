@@ -34,7 +34,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     return input.toLowerCase().replace(/\s/g, "+");
   }
   const searchText = convertString(context.query.searchText as string);
-  const pageNumber = context.query.pageNumber ? context.query.pageNumber : 1;
   const res = await fetch(
     `https://openlibrary.org/search.json?q=${searchText}`
   );
