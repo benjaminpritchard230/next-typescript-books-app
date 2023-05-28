@@ -9,6 +9,7 @@ export interface IUserBook {
   createdAt: string;
   updatedAt: string;
   __v: number;
+  notes?: string;
 }
 
 export interface Data {
