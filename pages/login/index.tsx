@@ -32,7 +32,7 @@ const Login = (props: Props) => {
 
   const { email, password } = formData;
 
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData((prevState) => ({
       ...prevState,
       [e.target.name]: e.target.value,
@@ -40,7 +40,7 @@ const Login = (props: Props) => {
     console.log(formData);
   };
 
-  const onSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
+  const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
     try {
       const user: ILoginResponse = await login(formData).unwrap();
@@ -58,7 +58,7 @@ const Login = (props: Props) => {
       </section>
 
       <section className="form">
-        <form onSubmit={onSubmit}>
+        <form onSubmit={handleSubmit}>
           <div className="form-group">
             <input
               type="email"
@@ -67,7 +67,7 @@ const Login = (props: Props) => {
               name="email"
               value={email}
               placeholder="Enter your email"
-              onChange={onChange}
+              onChange={handleChange}
             />
           </div>
           <div className="form-group">
@@ -78,7 +78,7 @@ const Login = (props: Props) => {
               name="password"
               value={password}
               placeholder="Enter password"
-              onChange={onChange}
+              onChange={handleChange}
             />
           </div>
 
