@@ -1,4 +1,7 @@
-import { useDeleteBookMutation } from "@/features/api/apiSlice";
+import {
+  useDeleteBookMutation,
+  useUpdateBookMutation,
+} from "@/features/api/apiSlice";
 import { IUserBook } from "@/types/userBooks";
 import Link from "next/link";
 import React from "react";
@@ -9,9 +12,18 @@ type Props = {
 
 const BookCard = ({ book }: Props) => {
   const [deleteBook] = useDeleteBookMutation();
+  const [updateBook] = useUpdateBookMutation();
 
   const handleDelete = () => {
     deleteBook({ id: book._id });
+  };
+
+  const handleMarkRead = () => {
+    const updatedBook = {
+      ...book,
+      isRead: !book.isRead,
+    };
+    updateBook(updatedBook);
   };
 
   const data = book.data;
@@ -30,10 +42,10 @@ const BookCard = ({ book }: Props) => {
       </button>
       <button
         onClick={() => {
-          //   handleMarkRead();
+          handleMarkRead();
         }}
       >
-        Mark book as read
+        {book.isRead ? "Mark book as unread" : "Mark book as read"}
       </button>
     </>
   );
