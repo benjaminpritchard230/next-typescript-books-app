@@ -58,6 +58,14 @@ export const booksApi = createApi({
       }),
       invalidatesTags: ["Books"],
     }),
+    updateBook: builder.mutation<IUserBook, IUserBook>({
+      query: (bookData) => ({
+        url: `books/${bookData._id}`,
+        method: "PUT",
+        body: bookData,
+      }),
+      invalidatesTags: ["Books"],
+    }),
     deleteBook: builder.mutation<IDeleteBookResponse, { id: string }>({
       query: (bookData) => ({
         url: `books/${bookData.id}`,
@@ -76,4 +84,5 @@ export const {
   useRegisterMutation,
   useAddBookMutation,
   useDeleteBookMutation,
+  useUpdateBookMutation,
 } = booksApi;
