@@ -11,7 +11,7 @@ type Props = {};
 const Library = (props: Props) => {
   const auth = useSelector((state: RootState) => state.auth);
 
-  const { data: bookData, error, isError } = useGetBooksQuery({});
+  const { data: bookData, error, isError } = useGetBooksQuery();
 
   if (bookData) {
     console.log(bookData);
