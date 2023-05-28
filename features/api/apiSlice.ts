@@ -22,7 +22,7 @@ export const booksApi = createApi({
   }),
   tagTypes: ["User", "Books"],
   endpoints: (builder) => ({
-    getBooks: builder.query<IUserLibrary, null>({
+    getBooks: builder.query<IUserLibrary, void>({
       query: () => ({
         url: "books/",
         method: "GET",
