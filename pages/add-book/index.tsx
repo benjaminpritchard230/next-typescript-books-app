@@ -1,10 +1,12 @@
 import { useAddBookMutation } from "@/features/api/apiSlice";
 import { setCredentials } from "@/features/auth/authSlice";
+import { isErrorWithMessage, isFetchBaseQueryError } from "@/services/helpers";
 import { RootState } from "@/store/store";
 import { IAddBookResponse } from "@/types/addBookResponse";
+import { SerializedError } from "@reduxjs/toolkit";
+import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
 type Props = {};
 
 export interface IAddBookFormData {
@@ -15,7 +17,13 @@ const AddBook = (props: Props) => {
   const dispatch = useDispatch();
   const auth = useSelector((state: RootState) => state.auth);
 
-  const [addBook] = useAddBookMutation();
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const [addBook, { isLoading, error, isSuccess }] = useAddBookMutation();
+
+  if (error) {
+    console.log(error);
+  }
 
   const [formData, setFormData] = useState<IAddBookFormData>({
     isbn: "",
@@ -37,10 +45,22 @@ const AddBook = (props: Props) => {
     e.preventDefault();
     try {
       const book: IAddBookResponse = await addBook(formData).unwrap();
-      setBookTitle(book.data.title);
+      if (isSuccess) {
+        setBookTitle(book.data.title);
+      }
       console.log(book);
     } catch (err) {
-      console.log(err);
+      if (isFetchBaseQueryError(err)) {
+        // you can access all properties of `FetchBaseQueryError` here
+        const errMsg =
+          "error" in err ? err.error : JSON.stringify(err.data.message);
+        console.log(errMsg, { variant: "error" });
+        setErrorMessage(errMsg);
+      } else if (isErrorWithMessage(err)) {
+        // you can access a string 'message' property here
+        console.log(err.message);
+        setErrorMessage(err.message);
+      }
     }
   };
 
@@ -70,6 +90,7 @@ const AddBook = (props: Props) => {
             </button>
           </div>
           <p>{bookTitle ? `Added new book: ${bookTitle}` : ""}</p>
+          {errorMessage && <p>{errorMessage}</p>}
         </form>
       </section>
     </>
