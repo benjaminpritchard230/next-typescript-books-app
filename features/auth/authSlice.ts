@@ -25,10 +25,16 @@ export const authSlice = createSlice({
       state.email = email;
       state.token = token;
     },
+    clearCredentials: (state) => {
+      state.id = "";
+      state.name = "";
+      state.email = "";
+      state.token = "";
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { setCredentials } = authSlice.actions;
+export const { setCredentials, clearCredentials } = authSlice.actions;
 
 export default authSlice.reducer;
