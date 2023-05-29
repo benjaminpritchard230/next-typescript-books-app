@@ -49,6 +49,7 @@ export const booksApi = createApi({
         method: "POST",
         body: credentials,
       }),
+      invalidatesTags: ["Books"],
     }),
     addBook: builder.mutation<IAddBookResponse, IAddBookFormData>({
       query: (bookData) => ({
