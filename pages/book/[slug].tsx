@@ -1,12 +1,9 @@
 import {
   useDeleteBookMutation,
-  useGetBookQuery,
   useGetBooksQuery,
   useUpdateBookMutation,
 } from "@/features/api/apiSlice";
 import { RootState } from "@/store/store";
-import { IBookData } from "@/types/books";
-import { GetServerSideProps, GetStaticProps } from "next";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
@@ -18,10 +15,10 @@ const BookDetails = (props: Props) => {
   const auth = useSelector((state: RootState) => state.auth);
 
   const { data: booksData, error, isError } = useGetBooksQuery();
+
   const [deleteBook] = useDeleteBookMutation();
   const [updateBook] = useUpdateBookMutation();
 
-  // const book = booksData.filter((book) => book._id === router.query.slug);
   const id = router.query.slug;
   const book = booksData!.filter((book) => book._id === id)[0];
 
@@ -45,14 +42,13 @@ const BookDetails = (props: Props) => {
 
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (event) => {
     event.preventDefault();
-    // Here, you can perform any action with the note, such as sending it to a server or updating a state in your parent component.
-    console.log("Note:", note);
+
     const updatedBook = {
       ...book,
       notes: note,
     };
     updateBook(updatedBook);
-    setNote(""); // Clear the input field after submitting the note
+    setNote("");
   };
 
   return (
