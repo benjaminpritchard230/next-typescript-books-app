@@ -2,8 +2,6 @@ import BookCard from "@/components/BookCard";
 import { useGetBooksQuery } from "@/features/api/apiSlice";
 import { RootState } from "@/store/store";
 import { IUserBook } from "@/types/userBooks";
-import Link from "next/link";
-import React from "react";
 import { useSelector } from "react-redux";
 
 type Props = {};
@@ -20,7 +18,7 @@ const Library = (props: Props) => {
   return (
     <>
       <h3>My library</h3>
-
+      <br />
       <ul>
         {bookData?.map((book: IUserBook) => {
           return <BookCard key={book._id} book={book} />;
