@@ -1,17 +1,30 @@
+import { clearCredentials } from "@/features/auth/authSlice";
+import { RootState } from "@/store/store";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 type Props = {};
 
 const Footer = (props: Props) => {
+  const { token } = useSelector((state: RootState) => state.auth);
+  const dispatch = useDispatch();
+  const router = useRouter();
+
+  const handleLogout = () => {
+    dispatch(clearCredentials());
+  };
+  const handleLogin = () => {
+    router.push("/login");
+  };
+
   return (
     <ul>
       <li>
         <Link href="/">Home</Link>
       </li>
-      <li>
-        <Link href="/login">Login</Link>
-      </li>
+
       <li>
         <Link href="/register">Register</Link>
       </li>
@@ -22,9 +35,24 @@ const Footer = (props: Props) => {
       <li>
         <Link href="/library">Library</Link>
       </li>
-      <li>
-        <Link href="/book/9780141346427">Book not in library</Link>
-      </li>
+      <br />
+      {token ? (
+        <button
+          onClick={() => {
+            handleLogout();
+          }}
+        >
+          Logout
+        </button>
+      ) : (
+        <button
+          onClick={() => {
+            handleLogin();
+          }}
+        >
+          Login
+        </button>
+      )}
     </ul>
   );
 };
