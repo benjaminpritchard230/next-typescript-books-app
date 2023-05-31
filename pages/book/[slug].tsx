@@ -56,8 +56,8 @@ const BookDetails = (props: Props) => {
       {book.data.title && (
         <p>Showing details for &quot;{book.data.title}&quot;</p>
       )}
-      {book.data.isbn_10[0] && <p>ISBN: {book.data.isbn_10[0]}</p>}
-      {book.data.isbn_13 && <p>ISBN: {book.data.isbn_13}</p>}
+      {book.data.isbn_10[0] && <p>ISBN-10: {book.data.isbn_10[0]}</p>}
+      {book.data.isbn_13 && <p>ISBN-13: {book.data.isbn_13}</p>}
 
       {book.data.physical_format && <p>Format: {book.data.physical_format}</p>}
       {book.data.copyright_date && (
