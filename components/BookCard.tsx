@@ -31,7 +31,11 @@ const BookCard = ({ book }: Props) => {
   return (
     <>
       <Link key={book._id} href={`/book/${book._id}`}>
-        <p>{data.title}</p>
+        <li className="bg-white rounded-lg p-4 shadow-md">
+          <h4 className="text-lg font-semibold mb-2">{data.title}</h4>
+          {/* <p className="text-gray-600 mb-2">Author Name</p> */}
+          <p className="text-gray-600">{data.isbn_13}</p>
+        </li>
       </Link>
       <button
         onClick={() => {
