@@ -1,5 +1,6 @@
 import { useRegisterMutation } from "@/features/api/apiSlice";
 import { setCredentials } from "@/features/auth/authSlice";
+import { isErrorWithMessage, isFetchBaseQueryError } from "@/services/helpers";
 import { AppDispatch, RootState } from "@/store/store";
 import React, { useEffect, useState } from "react";
 import { FaUser } from "react-icons/fa";
@@ -33,6 +34,7 @@ const Register = (props: Props) => {
   });
 
   const { name, email, password, password2 } = formData;
+  const [errorMessage, setErrorMessage] = useState("");
 
   const [register] = useRegisterMutation();
 
@@ -55,24 +57,34 @@ const Register = (props: Props) => {
         const user: IRegisterResponse = await register(formData).unwrap();
         dispatch(setCredentials(user));
       } catch (err) {
-        console.log(err);
+        if (isFetchBaseQueryError(err)) {
+          // you can access all properties of `FetchBaseQueryError` here
+          const errMsg =
+            "error" in err ? err.error : JSON.stringify(err.data.message);
+          console.log(errMsg, { variant: "error" });
+          setErrorMessage(errMsg);
+        } else if (isErrorWithMessage(err)) {
+          // you can access a string 'message' property here
+          console.log(err.message);
+          setErrorMessage(err.message);
+        }
       }
   };
 
   return (
     <>
-      <section className="heading">
-        <h1>
-          <FaUser /> Register
+      <section className="bg-gray-200 p-4">
+        <h1 className="flex items-center text-2xl">
+          <FaUser className="mr-2" /> Register
         </h1>
-        <p>Please create an account</p>
+        <p>Create an account to begin your library</p>
       </section>
-      <section className="form">
-        <form onSubmit={onSubmit}>
-          <div className="form-group">
+      <section className="mt-4">
+        <form onSubmit={onSubmit} className="max-w-md mx-auto">
+          <div className="mb-4">
             <input
               type="text"
-              className="form-control"
+              className="w-full p-2 border border-gray-300 rounded"
               id="name"
               name="name"
               value={name}
@@ -80,10 +92,10 @@ const Register = (props: Props) => {
               placeholder="Enter your name"
             />
           </div>
-          <div className="form-group">
+          <div className="mb-4">
             <input
               type="email"
-              className="form-control"
+              className="w-full p-2 border border-gray-300 rounded"
               id="email"
               name="email"
               value={email}
@@ -91,10 +103,10 @@ const Register = (props: Props) => {
               placeholder="Enter your email"
             />
           </div>
-          <div className="form-group">
+          <div className="mb-4">
             <input
               type="password"
-              className="form-control"
+              className="w-full p-2 border border-gray-300 rounded"
               id="password"
               name="password"
               value={password}
@@ -102,10 +114,10 @@ const Register = (props: Props) => {
               placeholder="Enter your password"
             />
           </div>
-          <div className="form-group">
+          <div className="mb-4">
             <input
               type="password"
-              className="form-control"
+              className="w-full p-2 border border-gray-300 rounded"
               id="password2"
               name="password2"
               value={password2}
@@ -113,10 +125,14 @@ const Register = (props: Props) => {
               placeholder="Confirm password"
             />
           </div>
-          <div className="form-group">
-            <button type="submit" className="btn btn-block">
+          <div className="mb-4">
+            <button
+              type="submit"
+              className="w-full p-2 bg-blue-500 text-white rounded"
+            >
               Submit
             </button>
+            {errorMessage && <p>Error: {errorMessage}</p>}
           </div>
         </form>
       </section>
