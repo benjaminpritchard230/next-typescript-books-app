@@ -52,9 +52,11 @@ const BookDetails = (props: Props) => {
   };
 
   return (
-    <>
+    <div className="max-w-lg mx-auto p-4">
       {book.data.title && (
-        <p>Showing details for &quot;{book.data.title}&quot;</p>
+        <p className="text-xl font-bold mb-4">
+          Showing details for &quot;{book.data.title}&quot;
+        </p>
       )}
       {book.data.isbn_10[0] && <p>ISBN-10: {book.data.isbn_10[0]}</p>}
       {book.data.isbn_13 && <p>ISBN-13: {book.data.isbn_13}</p>}
@@ -66,32 +68,38 @@ const BookDetails = (props: Props) => {
       {book.data.publish_date && <p>Published: {book.data.publish_date}</p>}
       {book.data.publishers && <p>Publisher: {book.data.publishers}</p>}
       {book.data.description && <p>Description: {book.data.description}</p>}
-      {book.isRead ? "You have read this book" : "You haven't read this book"}
+      <p className="mb-2">
+        {book.isRead ? "You have read this book" : "You haven't read this book"}
+      </p>
       {book.notes && <p>Your notes: {book.notes}</p>}
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="mb-4">
         <input
           type="text"
           value={note}
           onChange={handleChange}
           placeholder="Add a note..."
+          className="border border-gray-300 rounded p-2 mr-2 focus:outline-none focus:ring focus:border-blue-500"
         />
-        <button type="submit">Add</button>
+        <button
+          type="submit"
+          className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-500"
+        >
+          Add
+        </button>
       </form>
       <button
-        onClick={() => {
-          handleDelete();
-        }}
+        onClick={handleDelete}
+        className="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600 focus:outline-none focus:ring focus:border-red-500"
       >
         Remove from library
       </button>
       <button
-        onClick={() => {
-          handleMarkRead();
-        }}
+        onClick={handleMarkRead}
+        className="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600 focus:outline-none focus:ring focus:border-green-500 ml-2"
       >
         {book.isRead ? "Mark book as unread" : "Mark book as read"}
       </button>
-    </>
+    </div>
   );
 };
 
