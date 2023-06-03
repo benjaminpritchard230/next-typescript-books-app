@@ -69,16 +69,6 @@ const Homepage = (props: Props) => {
       <h1 className="text-4xl font-bold mb-4">ShelfSpace</h1>
       <h2 className="text-2xl font-medium mb-8">Your Book Library</h2>
 
-      {/* <!-- Book Library Section --> */}
-      <div className="mb-8">
-        <h3 className="text-xl font-semibold mb-4">Your Library</h3>
-        <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {bookData?.map((book: IUserBook) => {
-            return <BookCard key={book._id} book={book} />;
-          })}
-        </ul>
-      </div>
-
       {/* <!-- Add Book Section --> */}
       <div>
         <h3 className="text-xl font-semibold mb-4">Add a Book</h3>
@@ -98,9 +88,24 @@ const Homepage = (props: Props) => {
           >
             Add
           </button>
-          <p>{bookTitle ? `Added new book: ${bookTitle}` : ""}</p>
-          {errorMessage && <p>Error: {errorMessage}</p>}
         </form>
+        <br />
+        <p>
+          {bookTitle && errorMessage
+            ? `Added new book: ${bookTitle}`
+            : bookTitle}
+        </p>
+        {errorMessage && <p>Error: {errorMessage}</p>}
+      </div>
+      <br />
+      {/* <!-- Book Library Section --> */}
+      <div className="mb-8">
+        <h3 className="text-xl font-semibold mb-4">Your Library</h3>
+        <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          {bookData?.map((book: IUserBook) => {
+            return <BookCard key={book._id} book={book} />;
+          })}
+        </ul>
       </div>
     </div>
   );
