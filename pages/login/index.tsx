@@ -1,8 +1,10 @@
 import { useLoginMutation } from "@/features/api/apiSlice";
 import { setCredentials } from "@/features/auth/authSlice";
+import { isErrorWithMessage, isFetchBaseQueryError } from "@/services/helpers";
 import { RootState } from "@/store/store";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
+import { FaUser } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 
 type Props = {};
@@ -24,6 +26,7 @@ const Login = (props: Props) => {
   const router = useRouter();
 
   const [login, { isLoading, error }] = useLoginMutation();
+  const [errorMessage, setErrorMessage] = useState("");
 
   const [formData, setFormData] = useState<ILoginFormData>({
     email: "ben@ben.com",
@@ -47,22 +50,35 @@ const Login = (props: Props) => {
       dispatch(setCredentials(user));
       router.push("/");
     } catch (err) {
-      console.log(err);
+      if (isFetchBaseQueryError(err)) {
+        // you can access all properties of `FetchBaseQueryError` here
+        const errMsg =
+          "error" in err ? err.error : JSON.stringify(err.data.message);
+        console.log(errMsg, { variant: "error" });
+        setErrorMessage(errMsg);
+      } else if (isErrorWithMessage(err)) {
+        // you can access a string 'message' property here
+        console.log(err.message);
+        setErrorMessage(err.message);
+      }
     }
   };
 
   return (
     <>
-      <section className="heading">
-        <p>Login and start setting goals</p>
+      <section className="bg-gray-200 p-4">
+        <h1 className="flex items-center text-2xl">
+          <FaUser className="mr-2" /> Login
+        </h1>
+        <p>Login to manage your library</p>
       </section>
 
-      <section className="form">
-        <form onSubmit={handleSubmit}>
-          <div className="form-group">
+      <section className="mt-4">
+        <form onSubmit={handleSubmit} className="max-w-md mx-auto">
+          <div className="mb-4">
             <input
               type="email"
-              className="form-control"
+              className="w-full p-2 border border-gray-300 rounded"
               id="email"
               name="email"
               value={email}
@@ -70,10 +86,10 @@ const Login = (props: Props) => {
               onChange={handleChange}
             />
           </div>
-          <div className="form-group">
+          <div className="mb-4">
             <input
               type="password"
-              className="form-control"
+              className="w-full p-2 border border-gray-300 rounded"
               id="password"
               name="password"
               value={password}
@@ -82,10 +98,14 @@ const Login = (props: Props) => {
             />
           </div>
 
-          <div className="form-group">
-            <button type="submit" className="btn btn-block">
+          <div className="mb-4">
+            <button
+              type="submit"
+              className="w-full p-2 bg-blue-500 text-white rounded"
+            >
               Submit
             </button>
+            {errorMessage && <p>Error: {errorMessage}</p>}
           </div>
         </form>
       </section>
