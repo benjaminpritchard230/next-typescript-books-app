@@ -30,27 +30,29 @@ const BookCard = ({ book }: Props) => {
 
   return (
     <>
-      <Link key={book._id} href={`/book/${book._id}`}>
-        <li className="bg-white rounded-lg p-4 shadow-md">
+      <li className="bg-white rounded-lg p-4 shadow-md">
+        <Link key={book._id} href={`/book/${book._id}`}>
           <h4 className="text-lg font-semibold mb-2">{data.title}</h4>
           {/* <p className="text-gray-600 mb-2">Author Name</p> */}
           <p className="text-gray-600">{data.isbn_13}</p>
-        </li>
-      </Link>
-      <button
-        onClick={() => {
-          handleDelete();
-        }}
-      >
-        Remove from library
-      </button>
-      <button
-        onClick={() => {
-          handleMarkRead();
-        }}
-      >
-        {book.isRead ? "Mark book as unread" : "Mark book as read"}
-      </button>
+        </Link>
+        <button
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          onClick={() => {
+            handleDelete();
+          }}
+        >
+          Remove from library
+        </button>
+        <button
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          onClick={() => {
+            handleMarkRead();
+          }}
+        >
+          {book.isRead ? "Mark book as unread" : "Mark book as read"}
+        </button>
+      </li>{" "}
     </>
   );
 };
