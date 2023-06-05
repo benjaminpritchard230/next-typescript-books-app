@@ -30,23 +30,7 @@ const Navbar = (props: Props) => {
             ShelfSpace
           </Link>
 
-          <div className="flex sm:hidden">
-            <button
-              type="button"
-              className="text-gray-500 hover:text-white focus:outline-none focus:text-white"
-              aria-label="Toggle menu"
-            >
-              <svg viewBox="0 0 20 20" fill="currentColor" className="h-6 w-6">
-                <path
-                  fill-rule="evenodd"
-                  d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
-                  clip-rule="evenodd"
-                ></path>
-              </svg>
-            </button>
-          </div>
-
-          <div className="hidden sm:flex sm:items-center">
+          <div className="flex">
             {!token ? (
               <>
                 {" "}
