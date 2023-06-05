@@ -68,21 +68,30 @@ const BookDetails = (props: Props) => {
       {book.data.publish_date && <p>Published: {book.data.publish_date}</p>}
       {book.data.publishers && <p>Publisher: {book.data.publishers}</p>}
       {book.data.description && <p>Description: {book.data.description}</p>}
-      <p className="mb-2">
-        {book.isRead ? "You have read this book" : "You haven't read this book"}
-      </p>
-      {book.notes && <p>Your notes: {book.notes}</p>}
-      <form onSubmit={handleSubmit} className="mb-4">
+      <br />
+      <div
+        className={`${
+          book.notes ? "bg-gray-100 p-4 rounded-lg shadow-md" : ""
+        }`}
+      >
+        {book.notes && (
+          <p className="text-gray-800">
+            <span className="font-semibold">Your notes:</span> {book.notes}
+          </p>
+        )}
+      </div>
+      <br />
+      <form onSubmit={handleSubmit} className="mb-4 flex">
         <input
           type="text"
           value={note}
           onChange={handleChange}
           placeholder="Add a note..."
-          className="border border-gray-300 rounded p-2 mr-2 focus:outline-none focus:ring focus:border-blue-500"
+          className="w-full border border-gray-300 rounded py-2 px-4 focus:outline-none focus:ring-2 focus:ring-indigo-500"
         />
         <button
           type="submit"
-          className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-500"
+          className="bg-indigo-500 hover:bg-indigo-600 text-white py-2 px-4 rounded-r-lg"
         >
           Add
         </button>
@@ -91,13 +100,13 @@ const BookDetails = (props: Props) => {
         onClick={handleDelete}
         className="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600 focus:outline-none focus:ring focus:border-red-500"
       >
-        Remove from library
+        Remove book
       </button>
       <button
         onClick={handleMarkRead}
         className="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600 focus:outline-none focus:ring focus:border-green-500 ml-2"
       >
-        {book.isRead ? "Mark book as unread" : "Mark book as read"}
+        {book.isRead ? "Mark unread" : "Mark read"}
       </button>
     </div>
   );
