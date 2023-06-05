@@ -150,7 +150,9 @@ const Homepage = (props: Props) => {
         {errorMessage && <p>Error: {errorMessage}</p>}
         {!isValidISBN(isbn) ? (
           <p>Please enter a valid 10 or 13 digit ISBN.</p>
-        ) : null}
+        ) : (
+          <p>Valid ISBN.</p>
+        )}
       </div>
       <br />
       {/* <!-- Book Library Section --> */}
