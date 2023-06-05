@@ -58,16 +58,47 @@ const BookDetails = (props: Props) => {
           Showing details for &quot;{book.data.title}&quot;
         </p>
       )}
-      {book.data.isbn_10[0] && <p>ISBN-10: {book.data.isbn_10[0]}</p>}
-      {book.data.isbn_13 && <p>ISBN-13: {book.data.isbn_13}</p>}
-
-      {book.data.physical_format && <p>Format: {book.data.physical_format}</p>}
-      {book.data.copyright_date && (
-        <p>Copyright date: {book.data.copyright_date}</p>
+      {book.data.isbn_10[0] && (
+        <p className="mb-2">
+          <span className="font-semibold">ISBN-10:</span> {book.data.isbn_10[0]}
+        </p>
       )}
-      {book.data.publish_date && <p>Published: {book.data.publish_date}</p>}
-      {book.data.publishers && <p>Publisher: {book.data.publishers}</p>}
-      {book.data.description && <p>Description: {book.data.description}</p>}
+      {book.data.isbn_13 && (
+        <p className="mb-2">
+          <span className="font-semibold">ISBN-13:</span> {book.data.isbn_13}
+        </p>
+      )}
+
+      {book.data.physical_format && (
+        <p className="mb-2">
+          <span className="font-semibold">Format:</span>{" "}
+          {book.data.physical_format}
+        </p>
+      )}
+      {book.data.copyright_date && (
+        <p className="mb-2">
+          <span className="font-semibold">Copyright date:</span>{" "}
+          {book.data.copyright_date}
+        </p>
+      )}
+      {book.data.publish_date && (
+        <p className="mb-2">
+          <span className="font-semibold">Published:</span>{" "}
+          {book.data.publish_date}
+        </p>
+      )}
+      {book.data.publishers && (
+        <p className="mb-2">
+          <span className="font-semibold">Publisher:</span>{" "}
+          {book.data.publishers}
+        </p>
+      )}
+      {book.data.description && (
+        <p className="mb-2">
+          <span className="font-semibold">Description:</span>{" "}
+          {book.data.description}
+        </p>
+      )}
       <br />
       <div
         className={`${
