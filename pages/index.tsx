@@ -4,7 +4,7 @@ import { isErrorWithMessage, isFetchBaseQueryError } from "@/services/helpers";
 import { RootState } from "@/store/store";
 import { IAddBookResponse } from "@/types/addBookResponse";
 import { IUserBook } from "@/types/userBooks";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
 type Props = {};
@@ -33,6 +33,54 @@ const Homepage = (props: Props) => {
   const [bookTitle, setBookTitle] = useState("");
 
   const { isbn } = formData;
+
+  const isValidISBN = (isbn: string): boolean => {
+    // Remove any dashes or spaces from the input string
+    const cleanedISBN = isbn.replace(/[-\s]/g, "").replace(/x/g, "X");
+
+    // Check if the cleaned string has a length of 10 or 13
+    if (cleanedISBN.length !== 10 && cleanedISBN.length !== 13) {
+      return false;
+    }
+
+    // Calculate the checksum based on the ISBN length
+    let checksum = 0;
+    if (cleanedISBN.length === 10) {
+      for (let i = 0; i < 9; i++) {
+        const digit = parseInt(cleanedISBN.charAt(i));
+        if (isNaN(digit)) {
+          return false;
+        }
+        checksum += digit * (10 - i);
+      }
+
+      const lastChar = cleanedISBN.charAt(9);
+      if (lastChar !== "X" && isNaN(parseInt(lastChar))) {
+        return false;
+      }
+
+      checksum += lastChar === "X" ? 10 : parseInt(lastChar);
+      return checksum % 11 === 0;
+    } else if (cleanedISBN.length === 13) {
+      for (let i = 0; i < 12; i++) {
+        const digit = parseInt(cleanedISBN.charAt(i));
+        if (isNaN(digit)) {
+          return false;
+        }
+        checksum += i % 2 === 0 ? digit : digit * 3;
+      }
+
+      const lastDigit = parseInt(cleanedISBN.charAt(12));
+      if (isNaN(lastDigit)) {
+        return false;
+      }
+
+      checksum += lastDigit;
+      return checksum % 10 === 0;
+    }
+
+    return false;
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData((prevState) => ({
@@ -64,6 +112,7 @@ const Homepage = (props: Props) => {
       }
     }
   };
+
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-4xl font-bold mb-4 hidden sm:block">ShelfSpace</h1>
@@ -86,7 +135,8 @@ const Homepage = (props: Props) => {
           />
           <button
             type="submit"
-            className="bg-indigo-500 hover:bg-indigo-600 text-white py-2 px-4 rounded-r-lg"
+            className="bg-indigo-500 hover:bg-indigo-600 text-white py-2 px-4 rounded-r-lg disabled:opacity-25"
+            disabled={!isValidISBN(isbn)}
           >
             Add
           </button>
@@ -98,6 +148,9 @@ const Homepage = (props: Props) => {
             : bookTitle}
         </p>
         {errorMessage && <p>Error: {errorMessage}</p>}
+        {!isValidISBN(isbn) ? (
+          <p>Please enter a valid 10 or 13 digit ISBN.</p>
+        ) : null}
       </div>
       <br />
       {/* <!-- Book Library Section --> */}
