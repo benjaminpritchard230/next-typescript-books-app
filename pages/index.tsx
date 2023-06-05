@@ -66,8 +66,10 @@ const Homepage = (props: Props) => {
   };
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-4xl font-bold mb-4">ShelfSpace</h1>
-      <h2 className="text-2xl font-medium mb-8">Your Book Library</h2>
+      <h1 className="text-4xl font-bold mb-4 hidden sm:block">ShelfSpace</h1>
+      <h2 className="text-2xl font-medium mb-8 hidden sm:block">
+        Your Book Library
+      </h2>
 
       {/* <!-- Add Book Section --> */}
       <div>
@@ -80,7 +82,7 @@ const Homepage = (props: Props) => {
             value={isbn}
             placeholder="Enter ISBN"
             onChange={handleChange}
-            className="w-full rounded-l-lg py-2 px-4 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            className="w-full border border-gray-300 rounded py-2 px-4 focus:outline-none focus:ring-2 focus:ring-indigo-500"
           />
           <button
             type="submit"
