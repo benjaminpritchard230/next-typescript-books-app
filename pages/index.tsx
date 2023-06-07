@@ -113,6 +113,30 @@ const Homepage = (props: Props) => {
     }
   };
 
+  const [filterText, setFilterText] = useState("");
+
+  const handleFilterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFilterText(e.target.value);
+    console.log(filterText);
+  };
+
+  const displayBookCards = () => {
+    if (!filterText) {
+      return bookData?.map((book: IUserBook) => {
+        return <BookCard key={book._id} book={book} />;
+      });
+    } else {
+      const filterTextLowerCase = filterText.toLowerCase(); // Convert filterText to lowercase
+      return bookData
+        ?.filter((book) =>
+          book.data.title.toLowerCase().includes(filterTextLowerCase)
+        ) // Convert book title to lowercase
+        .map((book: IUserBook) => {
+          return <BookCard key={book._id} book={book} />;
+        });
+    }
+  };
+
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-4xl font-bold mb-4 hidden sm:block">ShelfSpace</h1>
@@ -157,11 +181,19 @@ const Homepage = (props: Props) => {
       <br />
       {/* <!-- Book Library Section --> */}
       <div className="mb-8">
-        <h3 className="text-xl font-semibold mb-4">Your Library</h3>
+        <span className="block sm:flex justify-between mb-8">
+          <h3 className="text-xl font-semibold mb-4">Your Library</h3>
+          <input
+            type="text"
+            value={filterText}
+            placeholder="Filter books"
+            onChange={handleFilterChange}
+            className="border border-gray-300 rounded py-2 px-4 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          />
+        </span>
+
         <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {bookData?.map((book: IUserBook) => {
-            return <BookCard key={book._id} book={book} />;
-          })}
+          {displayBookCards()}
         </ul>
       </div>
     </div>
