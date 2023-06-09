@@ -1,6 +1,6 @@
 import BookCard from "@/components/BookCard";
 import { useAddBookMutation, useGetBooksQuery } from "@/features/api/apiSlice";
-import bookPhoto from "@/public/book-website-photo.webp";
+import bookPhoto from "@/public/bookPhoto.jpg";
 import { isErrorWithMessage, isFetchBaseQueryError } from "@/services/helpers";
 import { RootState } from "@/store/store";
 import { IAddBookResponse } from "@/types/addBookResponse";
@@ -142,24 +142,57 @@ const Homepage = (props: Props) => {
   return (
     <div className="container mx-auto px-4 py-8">
       {/* Hero section */}
-      <section className="container">
-        {" "}
-        <h1 className="text-4xl font-bold mb-4 hidden sm:block">ShelfSpace</h1>
-        <h2 className="text-2xl font-medium mb-8 hidden sm:block">
-          Your Book Library
-        </h2>
-        <ul>
-          <li>Add your books by ISBN-10 or ISBN-13</li>
-          <li>View information about your books</li>
-          <li>Mark your books as read</li>
-          <li>Add notes about your books</li>
-        </ul>
-        <h3>
-          <Link href="/login">Login</Link> to get started or{" "}
-          <Link href="/register">register</Link> as a new user
-        </h3>
-        <img src={bookPhoto.src} alt="Woman reading a book in a library." />
-      </section>
+      <div className="px-6 py-12 text-center md:px-12 lg:text-left">
+        <div className="w-100 mx-auto sm:max-w-2xl md:max-w-3xl lg:max-w-5xl xl:max-w-7xl xl:px-32">
+          <div className="grid items-center lg:grid-cols-2">
+            <div className="mb-12 md:mt-12 lg:mt-0 lg:mb-0">
+              <div className="block rounded-lg sm:px-6 py-12 ">
+                <h1 className="mt-2 mb-5 text-4xl font-bold tracking-tight md:text-5xl xl:text-6xl">
+                  ShelfSpace
+                </h1>
+                <h2 className="mt-2 mb-7 text-2xl font-bold tracking-tight md:text-2xl xl:text-3xl">
+                  Keep track of your library
+                </h2>
+                <div className="flex justify-center lg:justify-start">
+                  {" "}
+                  <Link
+                    href="/about"
+                    className="text-white bg-gray-900 hover:bg-blue-800 rounded-lg text-sm px-5 py-4 mr-5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                  >
+                    About
+                  </Link>
+                  <Link
+                    href="/register"
+                    className="text-white bg-gray-900 hover:bg-blue-800  rounded-lg text-sm px-5 py-4 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                  >
+                    Get started
+                    <svg
+                      aria-hidden="true"
+                      className="w-5 h-5 ml-2 -mr-1"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
+                        clip-rule="evenodd"
+                      ></path>
+                    </svg>
+                  </Link>
+                </div>
+              </div>
+            </div>
+            <div className="md:mb-12 lg:mb-0">
+              <img
+                src={bookPhoto.src}
+                className="w-full hidden  lg:block rounded-lg shadow-lg dark:shadow-black/20"
+                alt=""
+              />
+            </div>
+          </div>
+        </div>
+      </div>
 
       {/* <!-- Add Book Section --> */}
       <section className={`${!token ? "hidden" : ""}`}>
