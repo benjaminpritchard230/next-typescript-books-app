@@ -1,9 +1,11 @@
 import BookCard from "@/components/BookCard";
 import { useAddBookMutation, useGetBooksQuery } from "@/features/api/apiSlice";
+import bookPhoto from "@/public/book-website-photo.webp";
 import { isErrorWithMessage, isFetchBaseQueryError } from "@/services/helpers";
 import { RootState } from "@/store/store";
 import { IAddBookResponse } from "@/types/addBookResponse";
 import { IUserBook } from "@/types/userBooks";
+import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
@@ -14,7 +16,7 @@ export interface IAddBookFormData {
 }
 
 const Homepage = (props: Props) => {
-  const auth = useSelector((state: RootState) => state.auth);
+  const { token } = useSelector((state: RootState) => state.auth);
 
   const { data: bookData } = useGetBooksQuery();
 
@@ -139,13 +141,28 @@ const Homepage = (props: Props) => {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-4xl font-bold mb-4 hidden sm:block">ShelfSpace</h1>
-      <h2 className="text-2xl font-medium mb-8 hidden sm:block">
-        Your Book Library
-      </h2>
+      {/* Hero section */}
+      <section className="container">
+        {" "}
+        <h1 className="text-4xl font-bold mb-4 hidden sm:block">ShelfSpace</h1>
+        <h2 className="text-2xl font-medium mb-8 hidden sm:block">
+          Your Book Library
+        </h2>
+        <ul>
+          <li>Add your books by ISBN-10 or ISBN-13</li>
+          <li>View information about your books</li>
+          <li>Mark your books as read</li>
+          <li>Add notes about your books</li>
+        </ul>
+        <h3>
+          <Link href="/login">Login</Link> to get started or{" "}
+          <Link href="/register">register</Link> as a new user
+        </h3>
+        <img src={bookPhoto.src} alt="Woman reading a book in a library." />
+      </section>
 
       {/* <!-- Add Book Section --> */}
-      <div>
+      <section className={`${!token ? "hidden" : ""}`}>
         <h3 className="text-xl font-semibold mb-4">Add a Book</h3>
         <form className="flex" onSubmit={handleSubmit}>
           <input
@@ -177,10 +194,10 @@ const Homepage = (props: Props) => {
         ) : (
           <p>Valid ISBN.</p>
         )}
-      </div>
+      </section>
       <br />
       {/* <!-- Book Library Section --> */}
-      <div className="mb-8">
+      <section className={`mb-8  ${!token ? "hidden" : ""}`}>
         <span className="block sm:flex justify-between mb-8">
           <h3 className="text-xl font-semibold mb-4">Your Library</h3>
           <input
@@ -195,7 +212,7 @@ const Homepage = (props: Props) => {
         <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {displayBookCards()}
         </ul>
-      </div>
+      </section>
     </div>
   );
 };
