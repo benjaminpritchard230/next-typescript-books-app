@@ -128,7 +128,7 @@ const Register = (props: Props) => {
           <div className="mb-4">
             <button
               type="submit"
-              className="w-full p-2 bg-indigo-500 text-white rounded"
+              className="w-full p-2 bg-indigo-500 hover:bg-indigo-400 text-white rounded"
             >
               Submit
             </button>

@@ -122,7 +122,7 @@ const BookDetails = (props: Props) => {
         />
         <button
           type="submit"
-          className="bg-indigo-500 hover:bg-indigo-600 text-white py-2 px-4 rounded-r-lg"
+          className="bg-indigo-500 hover:bg-indigo-400 text-white py-2 px-4 rounded-r-lg"
         >
           Add
         </button>
