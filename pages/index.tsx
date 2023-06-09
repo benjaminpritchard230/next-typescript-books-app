@@ -142,14 +142,35 @@ const Homepage = (props: Props) => {
   return (
     <div className="container mx-auto px-4 py-8">
       {/* Hero section */}
-      <div className="px-6 py-12 text-center md:px-12 lg:text-left">
+      <section
+        className={`${
+          token ? "hidden" : ""
+        } px-6 py-12 text-center md:px-12 lg:text-left text-gray-900`}
+      >
         <div className="w-100 mx-auto sm:max-w-2xl md:max-w-3xl lg:max-w-5xl xl:max-w-7xl xl:px-32">
           <div className="grid items-center lg:grid-cols-2">
             <div className="mb-12 md:mt-12 lg:mt-0 lg:mb-0">
               <div className="block rounded-lg sm:px-6 py-12 ">
-                <h1 className="mt-2 mb-5 text-4xl font-bold tracking-tight md:text-5xl xl:text-6xl">
-                  ShelfSpace
-                </h1>
+                <div className="flex">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth="1.5"
+                    stroke="currentColor"
+                    className="w-14 h-14"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"
+                    />
+                  </svg>
+                  <h1 className="mt-2 mb-5 text-4xl font-bold tracking-tight md:text-5xl xl:text-6xl">
+                    ShelfSpace
+                  </h1>
+                </div>
+
                 <h2 className="mt-2 mb-7 text-2xl font-bold tracking-tight md:text-2xl xl:text-3xl">
                   Keep track of your library
                 </h2>
@@ -157,13 +178,13 @@ const Homepage = (props: Props) => {
                   {" "}
                   <Link
                     href="/about"
-                    className="text-white bg-gray-900 hover:bg-blue-800 rounded-lg text-sm px-5 py-4 mr-5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                    className="text-white font-semibold bg-indigo-500 hover:bg-indigo-400  rounded  px-5 py-4 mr-3 text-center inline-flex items-center "
                   >
                     About
                   </Link>
                   <Link
                     href="/register"
-                    className="text-white bg-gray-900 hover:bg-blue-800  rounded-lg text-sm px-5 py-4 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                    className="text-white font-semibold bg-indigo-500 hover:bg-indigo-400  rounded  px-5 py-4 text-center inline-flex items-center "
                   >
                     Get started
                     <svg
@@ -181,18 +202,24 @@ const Homepage = (props: Props) => {
                     </svg>
                   </Link>
                 </div>
+                <p className="mt-2">
+                  Already a member?{" "}
+                  <span className="underline hover:text-gray-500 cursor-pointer">
+                    Login
+                  </span>{" "}
+                </p>
               </div>
             </div>
             <div className="md:mb-12 lg:mb-0">
               <img
                 src={bookPhoto.src}
-                className="w-full hidden  lg:block rounded-lg shadow-lg dark:shadow-black/20"
+                className="w-full hidden lg:block rounded-lg shadow-lg dark:shadow-black/20"
                 alt=""
               />
             </div>
           </div>
         </div>
-      </div>
+      </section>
 
       {/* <!-- Add Book Section --> */}
       <section className={`${!token ? "hidden" : ""}`}>
@@ -209,7 +236,7 @@ const Homepage = (props: Props) => {
           />
           <button
             type="submit"
-            className="bg-indigo-500 hover:bg-indigo-600 text-white py-2 px-4 rounded-r-lg disabled:opacity-25"
+            className="bg-indigo-500 hover:bg-indigo-400 text-white py-2 px-4 rounded-r-lg disabled:opacity-25"
             disabled={!isValidISBN(isbn)}
           >
             Add
