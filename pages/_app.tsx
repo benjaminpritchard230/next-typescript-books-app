@@ -1,10 +1,11 @@
 import Layout from "@/components/Layout";
-import { store } from "@/store/store";
+import { persistor, store } from "@/store/store";
 import type { NextPage } from "next";
 import type { AppProps } from "next/app";
 import { Lora } from "next/font/google";
 import type { ReactElement, ReactNode } from "react";
 import { Provider } from "react-redux";
+import { PersistGate } from "redux-persist/integration/react";
 import "../styles/globals.css";
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
@@ -24,7 +25,9 @@ export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   return (
     <main className={lora.className}>
       <Provider store={store}>
-        {getLayout(<Component {...pageProps} />)}
+        <PersistGate loading={null} persistor={persistor}>
+          {getLayout(<Component {...pageProps} />)}
+        </PersistGate>
       </Provider>
     </main>
   );
