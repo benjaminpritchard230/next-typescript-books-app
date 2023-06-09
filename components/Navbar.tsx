@@ -1,3 +1,4 @@
+import { booksApi } from "@/features/api/apiSlice";
 import { clearCredentials } from "@/features/auth/authSlice";
 import { RootState } from "@/store/store";
 import Link from "next/link";
@@ -14,9 +15,8 @@ const Navbar = (props: Props) => {
 
   const handleLogout = () => {
     dispatch(clearCredentials());
-  };
-  const handleLogin = () => {
-    router.push("/login");
+    dispatch(booksApi.util.resetApiState());
+    router.push("/");
   };
 
   const capitaliseString = (str: string) => {
@@ -33,7 +33,6 @@ const Navbar = (props: Props) => {
           <div className="flex">
             {!token ? (
               <>
-                {" "}
                 <Link
                   href="/login"
                   className="ml-4 px-2 py-1 text-gray-300 hover:text-white"
