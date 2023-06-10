@@ -202,11 +202,14 @@ const Homepage = (props: Props) => {
                     </svg>
                   </Link>
                 </div>
+
                 <p className="mt-2">
                   Already a member?{" "}
-                  <span className="underline hover:text-gray-500 cursor-pointer">
-                    Login
-                  </span>{" "}
+                  <Link href="/login">
+                    <span className="underline hover:text-gray-500 cursor-pointer">
+                      Login
+                    </span>
+                  </Link>
                 </p>
               </div>
             </div>
