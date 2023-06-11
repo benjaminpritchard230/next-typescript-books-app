@@ -2,6 +2,7 @@ import { useRegisterMutation } from "@/features/api/apiSlice";
 import { setCredentials } from "@/features/auth/authSlice";
 import { isErrorWithMessage, isFetchBaseQueryError } from "@/services/helpers";
 import { AppDispatch, RootState } from "@/store/store";
+import { Router, useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { FaUser } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
@@ -25,6 +26,7 @@ export interface IRegisterResponse {
 
 const Register = (props: Props) => {
   const dispatch = useDispatch<AppDispatch>();
+  const router = useRouter();
 
   const [formData, setFormData] = useState<IRegisterFormData>({
     name: "",
@@ -47,15 +49,16 @@ const Register = (props: Props) => {
     console.log(formData);
   };
 
-  const onSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
+  const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
 
     if (password !== password2) {
-      console.log("Passwords don't match");
+      setErrorMessage("Passwords don't match.");
     } else
       try {
         const user: IRegisterResponse = await register(formData).unwrap();
         dispatch(setCredentials(user));
+        router.push("/");
       } catch (err) {
         if (isFetchBaseQueryError(err)) {
           // you can access all properties of `FetchBaseQueryError` here
@@ -80,7 +83,7 @@ const Register = (props: Props) => {
         <p>Create an account to begin your library</p>
       </section>
       <section className="mt-4">
-        <form onSubmit={onSubmit} className="max-w-md mx-auto">
+        <form onSubmit={handleSubmit} className="max-w-md mx-auto">
           <div className="mb-4">
             <input
               type="text"
