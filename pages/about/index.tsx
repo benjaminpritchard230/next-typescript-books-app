@@ -1,5 +1,5 @@
 import expressImage from "@/public/about-images/express.png";
-import nextImage from "@/public/about-images/next.png";
+import nextImage from "@/public/about-images/next.svg";
 import tailwindImage from "@/public/about-images/tailwind.png";
 import typescriptImage from "@/public/about-images/typescript.svg";
 import React from "react";
@@ -8,7 +8,7 @@ type Props = {};
 
 const About = (props: Props) => {
   return (
-    <div className="bg-gray-100 py-8 px-4">
+    <div className="py-8 px-4">
       <div className="max-w-2xl mx-auto">
         <h1 className="text-3xl font-bold mb-4">About</h1>
 
@@ -40,8 +40,10 @@ const About = (props: Props) => {
           accessing your digital book collection has never been more convenient.
         </p>
         <br />
-        {/* <!-- Links --> */}
+        {/* Links */}
         <section>
+          <h2 className="text-2xl font-bold mb-4">Github links</h2>
+
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -84,41 +86,31 @@ const About = (props: Props) => {
             Link to back-end repository
           </a>
         </section>
-        <br />
-        {/* <!-- Images --> */}
+
+        {/* Images */}
         <section className="my-3">
           <h2 className="text-2xl font-bold mb-4">Built using</h2>
-          <div className="flex items-center justify-center space-x-4">
-            <div className="grid grid-cols-2 gap-2 		">
-              <div className="flex ">
-                <img
-                  className="h-auto max-w-full rounded-lg"
-                  src={expressImage.src}
-                  alt=""
-                />
-              </div>
-              <div className="flex">
-                <img
-                  className="h-auto max-w-full rounded-lg"
-                  src={nextImage.src}
-                  alt=""
-                />
-              </div>
-              <div className="flex ">
-                <img
-                  className="h-auto max-w-full rounded-lg"
-                  src={tailwindImage.src}
-                  alt=""
-                />
-              </div>
-              <div className="flex ">
-                <img
-                  className="h-auto max-w-full rounded-lg"
-                  src={typescriptImage.src}
-                  alt=""
-                />
-              </div>
-            </div>
+          <div className="grid grid-cols-2 gap-2 items-center	">
+            <img
+              className="h-auto max-w-full rounded-lg"
+              src={expressImage.src}
+              alt=""
+            />
+            <img
+              className="h-auto max-w-full rounded-lg"
+              src={nextImage.src}
+              alt=""
+            />
+            <img
+              className="h-auto max-w-full rounded-lg"
+              src={tailwindImage.src}
+              alt=""
+            />
+            <img
+              className="h-auto max-w-full rounded-lg"
+              src={typescriptImage.src}
+              alt=""
+            />
           </div>
         </section>
       </div>
