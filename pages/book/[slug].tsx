@@ -26,6 +26,7 @@ const BookDetails = (props: Props) => {
 
   const handleDelete = () => {
     deleteBook({ id: book._id });
+    router.push("/");
   };
 
   const handleMarkRead = () => {
