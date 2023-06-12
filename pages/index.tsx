@@ -94,6 +94,8 @@ const Homepage = (props: Props) => {
 
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
+    setErrorMessage("");
+    setBookTitle("");
     try {
       const book: IAddBookResponse = await addBook(formData).unwrap();
       if (!error) {
@@ -178,13 +180,13 @@ const Homepage = (props: Props) => {
                   {" "}
                   <Link
                     href="/about"
-                    className="text-white font-semibold bg-indigo-500 hover:bg-indigo-400  rounded  px-5 py-4 mr-3 text-center inline-flex items-center "
+                    className="text-white  font-semibold bg-indigo-500 hover:bg-indigo-400  rounded  px-5 py-4 mr-3 justify-center inline-flex items-center w-1/2	 "
                   >
                     About
                   </Link>
                   <Link
                     href="/register"
-                    className="text-white font-semibold bg-indigo-500 hover:bg-indigo-400  rounded  px-5 py-4 text-center inline-flex items-center "
+                    className="text-white font-semibold bg-indigo-500 hover:bg-indigo-400  rounded  px-5 py-4 justify-center inline-flex items-center w-1/2	 "
                   >
                     Get started
                     <svg
@@ -204,7 +206,7 @@ const Homepage = (props: Props) => {
                 </div>
 
                 <p className="mt-2">
-                  Already a member?{" "}
+                  Already a member?
                   <Link href="/login">
                     <span className="underline hover:text-gray-500 cursor-pointer">
                       Login
@@ -247,16 +249,14 @@ const Homepage = (props: Props) => {
         </form>
         <br />
         <p>
-          {bookTitle && errorMessage
-            ? `Added new book: ${bookTitle}`
-            : bookTitle}
+          {!isValidISBN(isbn) ? (
+            <p>Please enter a valid 10 or 13 digit ISBN.</p>
+          ) : (
+            <p>Valid ISBN.</p>
+          )}
+          {bookTitle && <p>Added book: {bookTitle}</p>}
         </p>
         {errorMessage && <p>Error: {errorMessage}</p>}
-        {!isValidISBN(isbn) ? (
-          <p>Please enter a valid 10 or 13 digit ISBN.</p>
-        ) : (
-          <p>Valid ISBN.</p>
-        )}
       </section>
       <br />
       {/* <!-- Book Library Section --> */}
