@@ -5,21 +5,26 @@ import {
 } from "@/features/api/apiSlice";
 import { RootState } from "@/store/store";
 import { useRouter } from "next/router";
+import { todo } from "node:test";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 
 type Props = {};
 
+// Todo: fix breaking page on refresh
+
 const BookDetails = (props: Props) => {
   const router = useRouter();
   const auth = useSelector((state: RootState) => state.auth);
+  const id = router.query.slug;
 
   const { data: booksData, error, isError } = useGetBooksQuery();
 
   const [deleteBook] = useDeleteBookMutation();
   const [updateBook] = useUpdateBookMutation();
 
-  const id = router.query.slug;
+  const [imageError, setImageError] = useState(false);
+
   const book = booksData!.filter((book) => book._id === id)[0];
 
   const [note, setNote] = useState("");
@@ -52,22 +57,58 @@ const BookDetails = (props: Props) => {
     setNote("");
   };
 
+  const handleImageError = () => {
+    setImageError(true);
+  };
+
   return (
-    <div className="max-w-lg mx-auto p-4">
+    <div className="max-w-lg mx-auto p-4 mb-16">
       {book.data.title && (
         <p className="text-xl font-bold mb-4">
           Showing details for &quot;{book.data.title}&quot;
         </p>
       )}
-      {book.data.isbn_10[0] && (
-        <p className="mb-2">
-          <span className="font-semibold">ISBN-10:</span> {book.data.isbn_10[0]}
-        </p>
+      <img
+        className={`bg-gray-200 h-56 w-40 rounded-lg mb-4 ${
+          imageError ? "hidden" : ""
+        }`}
+        src={`https://covers.openlibrary.org/b/isbn/${book.isbn}.jpg`}
+        alt=""
+        onError={handleImageError}
+      />
+      {book.data.isbn_10 && book.data.isbn_10.length > 1 ? (
+        <div>
+          <p className="font-semibold">ISBN-10:</p>
+          <ul className="list-disc pl-6">
+            {book.data.isbn_10.map((isbn) => (
+              <li key={isbn}>{isbn}</li>
+            ))}
+          </ul>
+        </div>
+      ) : (
+        book.data.isbn_10 && (
+          <p className="mb-2">
+            <span className="font-semibold">ISBN-10:</span>{" "}
+            {book.data.isbn_10[0]}
+          </p>
+        )
       )}
-      {book.data.isbn_13 && (
-        <p className="mb-2">
-          <span className="font-semibold">ISBN-13:</span> {book.data.isbn_13}
-        </p>
+      {book.data.isbn_13 && book.data.isbn_13.length > 1 ? (
+        <div>
+          <p className="font-semibold">ISBN-13:</p>
+          <ul className="list-disc pl-6">
+            {book.data.isbn_13.map((isbn) => (
+              <li key={isbn}>{isbn}</li>
+            ))}
+          </ul>
+        </div>
+      ) : (
+        book.data.isbn_13 && (
+          <p className="mb-2">
+            <span className="font-semibold">ISBN-13:</span>{" "}
+            {book.data.isbn_13[0]}
+          </p>
+        )
       )}
 
       {book.data.physical_format && (
@@ -100,7 +141,6 @@ const BookDetails = (props: Props) => {
           {book.data.description}
         </p>
       )}
-      <br />
       <div
         className={`${
           book.notes ? "bg-gray-100 p-4 rounded-lg shadow-md" : ""
@@ -112,7 +152,6 @@ const BookDetails = (props: Props) => {
           </p>
         )}
       </div>
-      <br />
       <form onSubmit={handleSubmit} className="mb-4 flex">
         <input
           type="text"
