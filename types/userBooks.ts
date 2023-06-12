@@ -38,8 +38,8 @@ export interface Data {
   works: Work[];
   type: Type2;
   ocaid: string;
-  isbn_10: string[];
-  isbn_13: string[];
+  isbn_10?: string[];
+  isbn_13?: string[];
   lccn: string[];
   oclc_numbers: string[];
   lc_classifications: string[];
