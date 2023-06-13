@@ -5,6 +5,7 @@ import { isErrorWithMessage, isFetchBaseQueryError } from "@/services/helpers";
 import { RootState } from "@/store/store";
 import { IAddBookResponse } from "@/types/addBookResponse";
 import { IUserBook } from "@/types/userBooks";
+import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
@@ -13,6 +14,10 @@ type Props = {};
 
 export interface IAddBookFormData {
   isbn: string;
+}
+
+export interface IErrorResponse {
+  message: string;
 }
 
 const Homepage = (props: Props) => {
@@ -104,13 +109,13 @@ const Homepage = (props: Props) => {
       console.log(book);
     } catch (err) {
       if (isFetchBaseQueryError(err)) {
-        // you can access all properties of `FetchBaseQueryError` here
+        const fetchError = err as FetchBaseQueryError;
         const errMsg =
-          "error" in err ? err.error : JSON.stringify(err.data.message);
-        console.log(errMsg, { variant: "error" });
+          "error" in fetchError
+            ? fetchError.error
+            : JSON.stringify((fetchError.data as IErrorResponse)?.message);
         setErrorMessage(errMsg);
       } else if (isErrorWithMessage(err)) {
-        // you can access a string 'message' property here
         console.log(err.message);
         setErrorMessage(err.message);
       }

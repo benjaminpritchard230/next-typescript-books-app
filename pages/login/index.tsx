@@ -1,7 +1,9 @@
 import { useLoginMutation } from "@/features/api/apiSlice";
 import { setCredentials } from "@/features/auth/authSlice";
+import { IErrorResponse } from "@/pages/index";
 import { isErrorWithMessage, isFetchBaseQueryError } from "@/services/helpers";
 import { RootState } from "@/store/store";
+import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { FaUser } from "react-icons/fa";
@@ -51,13 +53,13 @@ const Login = (props: Props) => {
       router.push("/");
     } catch (err) {
       if (isFetchBaseQueryError(err)) {
-        // you can access all properties of `FetchBaseQueryError` here
+        const fetchError = err as FetchBaseQueryError;
         const errMsg =
-          "error" in err ? err.error : JSON.stringify(err.data.message);
-        console.log(errMsg, { variant: "error" });
+          "error" in fetchError
+            ? fetchError.error
+            : JSON.stringify((fetchError.data as IErrorResponse)?.message);
         setErrorMessage(errMsg);
       } else if (isErrorWithMessage(err)) {
-        // you can access a string 'message' property here
         console.log(err.message);
         setErrorMessage(err.message);
       }
