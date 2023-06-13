@@ -11,8 +11,6 @@ import { useSelector } from "react-redux";
 
 type Props = {};
 
-// Todo: fix breaking page on refresh
-
 const BookDetails = (props: Props) => {
   const router = useRouter();
   const auth = useSelector((state: RootState) => state.auth);
