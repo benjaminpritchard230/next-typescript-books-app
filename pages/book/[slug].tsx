@@ -18,23 +18,27 @@ const BookDetails = (props: Props) => {
   const auth = useSelector((state: RootState) => state.auth);
   const id = router.query.slug;
 
-  const { data: booksData, error, isError } = useGetBooksQuery();
+  const { data: bookData } = useGetBooksQuery();
 
   const [deleteBook] = useDeleteBookMutation();
   const [updateBook] = useUpdateBookMutation();
 
   const [imageError, setImageError] = useState(false);
 
-  const book = booksData!.filter((book) => book._id === id)[0];
+  const book = bookData?.filter((book) => book._id === id)[0];
 
   const [note, setNote] = useState("");
 
   const handleDelete = () => {
-    deleteBook({ id: book._id });
+    deleteBook({ id: book!._id });
     router.push("/");
   };
 
   const handleMarkRead = () => {
+    if (!book) {
+      return;
+    }
+
     const updatedBook = {
       ...book,
       isRead: !book.isRead,
@@ -49,6 +53,10 @@ const BookDetails = (props: Props) => {
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (event) => {
     event.preventDefault();
 
+    if (!book) {
+      return;
+    }
+
     const updatedBook = {
       ...book,
       notes: note,
@@ -60,6 +68,10 @@ const BookDetails = (props: Props) => {
   const handleImageError = () => {
     setImageError(true);
   };
+
+  if (!book) {
+    return null; // Or render a loading indicator or an error message
+  }
 
   return (
     <div className="max-w-lg mx-auto p-4 mb-16">
