@@ -68,14 +68,16 @@ const BookDetails = (props: Props) => {
           Showing details for &quot;{book.data.title}&quot;
         </p>
       )}
-      <img
-        className={`bg-gray-200 h-56 w-40 rounded-lg mb-4 ${
-          imageError ? "hidden" : ""
-        }`}
-        src={`https://covers.openlibrary.org/b/isbn/${book.isbn}.jpg`}
-        alt=""
-        onError={handleImageError}
-      />
+      <div className="flex justify-center">
+        <img
+          className={`bg-gray-200 h-56 w-40 rounded-lg mb-4 ${
+            imageError ? "hidden" : ""
+          }`}
+          src={`https://covers.openlibrary.org/b/isbn/${book.isbn}.jpg`}
+          alt=""
+          onError={handleImageError}
+        />
+      </div>
       {book.data.isbn_10 && book.data.isbn_10.length > 1 ? (
         <div>
           <p className="font-semibold">ISBN-10:</p>
