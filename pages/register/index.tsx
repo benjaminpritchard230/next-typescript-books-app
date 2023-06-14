@@ -48,7 +48,6 @@ const Register = (props: Props) => {
       ...prevData,
       [name]: value,
     }));
-    console.log(formData);
   };
 
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
@@ -70,7 +69,6 @@ const Register = (props: Props) => {
               : JSON.stringify((fetchError.data as IErrorResponse)?.message);
           setErrorMessage(errMsg);
         } else if (isErrorWithMessage(err)) {
-          console.log(err.message);
           setErrorMessage(err.message);
         }
       }

@@ -90,7 +90,6 @@ const Homepage = (props: Props) => {
       ...prevState,
       [e.target.name]: e.target.value,
     }));
-    console.log(formData);
   };
 
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
@@ -102,7 +101,6 @@ const Homepage = (props: Props) => {
       if (!error) {
         setBookTitle(book.data.title);
       }
-      console.log(book);
     } catch (err) {
       if (isFetchBaseQueryError(err)) {
         const fetchError = err as FetchBaseQueryError;
@@ -112,7 +110,6 @@ const Homepage = (props: Props) => {
             : JSON.stringify((fetchError.data as IErrorResponse)?.message);
         setErrorMessage(errMsg);
       } else if (isErrorWithMessage(err)) {
-        console.log(err.message);
         setErrorMessage(err.message);
       }
     }
@@ -122,7 +119,6 @@ const Homepage = (props: Props) => {
 
   const handleFilterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFilterText(e.target.value);
-    console.log(filterText);
   };
 
   const displayBookCards = () => {
@@ -271,18 +267,18 @@ const Homepage = (props: Props) => {
           </button>
         </form>
         <br />
-        <p>
-          {!isValidISBN(isbn) ? (
-            <p>Please enter a valid 10 or 13 digit ISBN.</p>
-          ) : (
-            <p>Valid ISBN.</p>
-          )}
-          {bookTitle ? (
-            <p className="leading-tight">Added book: {bookTitle}</p>
-          ) : (
-            <p className="leading-tight">&nbsp;</p>
-          )}
-        </p>
+
+        {!isValidISBN(isbn) ? (
+          <p>Please enter a valid 10 or 13 digit ISBN.</p>
+        ) : (
+          <p>Valid ISBN.</p>
+        )}
+        {bookTitle ? (
+          <p className="leading-tight">Added book: {bookTitle}</p>
+        ) : (
+          <p className="leading-tight">&nbsp;</p>
+        )}
+
         {errorMessage ? (
           <p className="leading-tight">Error: {errorMessage}</p>
         ) : (

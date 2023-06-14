@@ -42,7 +42,6 @@ const Login = (props: Props) => {
       ...prevState,
       [e.target.name]: e.target.value,
     }));
-    console.log(formData);
   };
 
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
@@ -60,7 +59,6 @@ const Login = (props: Props) => {
             : JSON.stringify((fetchError.data as IErrorResponse)?.message);
         setErrorMessage(errMsg);
       } else if (isErrorWithMessage(err)) {
-        console.log(err.message);
         setErrorMessage(err.message);
       }
     }
