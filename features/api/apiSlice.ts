@@ -1,4 +1,4 @@
-import { IAddBookFormData } from "@/pages/add-book";
+import { IAddBookFormData } from "@/pages/index";
 import { ILoginFormData, ILoginResponse } from "@/pages/login";
 import { IRegisterFormData, IRegisterResponse } from "@/pages/register";
 import type { RootState } from "@/store/store";
