@@ -2,13 +2,12 @@ import { useRegisterMutation } from "@/features/api/apiSlice";
 import { setCredentials } from "@/features/auth/authSlice";
 import { IErrorResponse } from "@/pages/index";
 import { isErrorWithMessage, isFetchBaseQueryError } from "@/services/helpers";
-import { AppDispatch, RootState } from "@/store/store";
+import { AppDispatch } from "@/store/store";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
-import { Router, useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import React, { useState } from "react";
 import { FaUser } from "react-icons/fa";
-import { useDispatch, useSelector } from "react-redux";
-import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
 
 type Props = {};
 
@@ -38,6 +37,7 @@ const Register = (props: Props) => {
   });
 
   const { name, email, password, password2 } = formData;
+
   const [errorMessage, setErrorMessage] = useState("");
 
   const [register] = useRegisterMutation();
