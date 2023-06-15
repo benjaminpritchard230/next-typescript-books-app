@@ -4,8 +4,7 @@ import {
 } from "@/features/api/apiSlice";
 import { IUserBook } from "@/types/userBooks";
 import Link from "next/link";
-import React, { useState } from "react";
-import { AiOutlineCheckSquare, AiOutlineCloseSquare } from "react-icons/ai";
+import { useState } from "react";
 
 type Props = {
   book: IUserBook;
@@ -89,7 +88,7 @@ const BookCard = ({ book }: Props) => {
                 imageError ? "hidden" : ""
               }`}
               src={`https://covers.openlibrary.org/b/isbn/${book.isbn}.jpg`}
-              alt=""
+              alt={book.data.title}
               onError={handleImageError}
             />
             {imageError && (
