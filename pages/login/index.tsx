@@ -31,8 +31,8 @@ const Login = (props: Props) => {
   const [errorMessage, setErrorMessage] = useState("");
 
   const [formData, setFormData] = useState<ILoginFormData>({
-    email: "ben@ben.com",
-    password: "benben11",
+    email: "",
+    password: "",
   });
 
   const { email, password } = formData;
