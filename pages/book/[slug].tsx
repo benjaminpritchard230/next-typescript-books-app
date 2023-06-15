@@ -3,17 +3,13 @@ import {
   useGetBooksQuery,
   useUpdateBookMutation,
 } from "@/features/api/apiSlice";
-import { RootState } from "@/store/store";
 import { useRouter } from "next/router";
-import { todo } from "node:test";
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
 
 type Props = {};
 
 const BookDetails = (props: Props) => {
   const router = useRouter();
-  const auth = useSelector((state: RootState) => state.auth);
   const id = router.query.slug;
 
   const { data: bookData } = useGetBooksQuery();
@@ -23,9 +19,9 @@ const BookDetails = (props: Props) => {
 
   const [imageError, setImageError] = useState(false);
 
-  const book = bookData?.filter((book) => book._id === id)[0];
-
   const [note, setNote] = useState("");
+
+  const book = bookData?.filter((book) => book._id === id)[0];
 
   const handleDelete = () => {
     deleteBook({ id: book!._id });
@@ -68,15 +64,15 @@ const BookDetails = (props: Props) => {
   };
 
   if (!book) {
-    return null; // Or render a loading indicator or an error message
+    return null;
   }
 
   return (
-    <div className="max-w-lg mx-auto p-4 mb-16">
+    <section className="max-w-lg mx-auto p-4 mb-16">
       {book.data.title && (
-        <p className="text-xl font-bold mb-4">
+        <h2 className="text-xl font-bold mb-4">
           Showing details for &quot;{book.data.title}&quot;
-        </p>
+        </h2>
       )}
       <div className="flex justify-center">
         <img
@@ -84,7 +80,7 @@ const BookDetails = (props: Props) => {
             imageError ? "hidden" : ""
           }`}
           src={`https://covers.openlibrary.org/b/isbn/${book.isbn}.jpg`}
-          alt=""
+          alt={`The cover of the book ${book.data.title}`}
           onError={handleImageError}
         />
       </div>
@@ -191,7 +187,7 @@ const BookDetails = (props: Props) => {
       >
         {book.isRead ? "Mark unread" : "Mark read"}
       </button>
-    </div>
+    </section>
   );
 };
 
