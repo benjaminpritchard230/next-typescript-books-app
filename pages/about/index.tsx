@@ -2,7 +2,6 @@ import expressImage from "@/public/about-images/express.png";
 import nextImage from "@/public/about-images/next.svg";
 import tailwindImage from "@/public/about-images/tailwind.png";
 import typescriptImage from "@/public/about-images/typescript.svg";
-import React from "react";
 
 type Props = {};
 
@@ -40,76 +39,82 @@ const About = (props: Props) => {
           accessing your digital book collection has never been more convenient.
         </p>
         <br />
+
         {/* Links */}
         <section>
           <h2 className="text-2xl font-bold mb-4">Github links</h2>
 
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth="1.5"
-            stroke="currentColor"
-            className="inline w-6 h-6"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244"
-            />
-          </svg>
-          <a
-            href="https://github.com/benjaminpritchard230/next-typescript-books-app"
-            className="text-blue-500 hover:underline mb-2"
-          >
-            Link to front-end repository
-          </a>
-          <br />
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth="1.5"
-            stroke="currentColor"
-            className="inline w-6 h-6"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244"
-            />
-          </svg>
-          <a
-            href="https://github.com/benjaminpritchard230/next-typescript-books-app"
-            className="text-blue-500 hover:underline mb-4"
-          >
-            Link to back-end repository
-          </a>
+          <ul>
+            <li>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth="1.5"
+                stroke="currentColor"
+                className="inline w-6 h-6"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244"
+                />
+              </svg>
+              <a
+                href="https://github.com/benjaminpritchard230/next-typescript-books-app"
+                className="text-blue-500 hover:underline mb-2"
+              >
+                Link to front-end repository
+              </a>
+            </li>
+            <li>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth="1.5"
+                stroke="currentColor"
+                className="inline w-6 h-6"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244"
+                />
+              </svg>
+              <a
+                href="https://github.com/benjaminpritchard230/next-typescript-books-app"
+                className="text-blue-500 hover:underline mb-4"
+              >
+                Link to back-end repository
+              </a>
+            </li>
+          </ul>
         </section>
 
         {/* Images */}
         <section className="my-3">
           <h2 className="text-2xl font-bold mb-4">Built using</h2>
-          <div className="grid grid-cols-2 gap-2 items-center	">
+          <div className="grid grid-cols-2 gap-2 items-center">
             <img
               className="h-auto max-w-full rounded-lg"
               src={expressImage.src}
-              alt=""
+              alt="Express.js logo"
             />
             <img
               className="h-auto max-w-full rounded-lg"
               src={nextImage.src}
-              alt=""
+              alt="Next.js logo"
             />
             <img
               className="h-auto max-w-full rounded-lg"
               src={tailwindImage.src}
-              alt=""
+              alt="Tailwind CSS logo"
             />
             <img
               className="h-auto max-w-full rounded-lg"
               src={typescriptImage.src}
-              alt=""
+              alt="TypeScript logo"
             />
           </div>
         </section>
