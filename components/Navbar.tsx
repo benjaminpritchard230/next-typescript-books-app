@@ -9,9 +9,10 @@ import { useDispatch, useSelector } from "react-redux";
 type Props = {};
 
 const Navbar = (props: Props) => {
-  const { name, token, email } = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch();
   const router = useRouter();
+
+  const { name, token } = useSelector((state: RootState) => state.auth);
 
   const handleLogout = () => {
     dispatch(clearCredentials());
