@@ -7,7 +7,7 @@ import { IAddBookResponse } from "@/types/addBookResponse";
 import { IUserBook } from "@/types/userBooks";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 
 type Props = {};
@@ -33,7 +33,7 @@ const Homepage = (props: Props) => {
 
   const [bookTitle, setBookTitle] = useState("");
 
-  const [addBook, { isLoading, error, isSuccess }] = useAddBookMutation();
+  const [addBook, { isLoading, error }] = useAddBookMutation();
 
   const { isbn } = formData;
 
@@ -157,7 +157,7 @@ const Homepage = (props: Props) => {
                     viewBox="0 0 24 24"
                     strokeWidth="1.5"
                     stroke="currentColor"
-                    className="w-14 h-14"
+                    className="w-14 h-16"
                   >
                     <path
                       strokeLinecap="round"
@@ -188,7 +188,7 @@ const Homepage = (props: Props) => {
                     Get started
                     <svg
                       aria-hidden="true"
-                      className="w-5 h-5 ml-2 -mr-1"
+                      className="w-5 h-5 ml-2 mr-1"
                       fill="currentColor"
                       viewBox="0 0 20 20"
                       xmlns="http://www.w3.org/2000/svg"
@@ -205,7 +205,7 @@ const Homepage = (props: Props) => {
                 <p className="mt-2">
                   Already a member?
                   <Link href="/login">
-                    <span className="underline hover:text-gray-500 cursor-pointer">
+                    <span className="underline hover:text-gray-500 ml-1 cursor-pointer">
                       Login
                     </span>
                   </Link>
@@ -216,7 +216,7 @@ const Homepage = (props: Props) => {
               <img
                 src={bookPhoto.src}
                 className="w-full hidden lg:block rounded-lg shadow-lg dark:shadow-black/20"
-                alt=""
+                alt="A cosy library with a lamp"
               />
             </div>
           </div>
@@ -239,7 +239,7 @@ const Homepage = (props: Props) => {
           <button
             type="submit"
             className="bg-indigo-500 hover:bg-indigo-400 text-white py-2 px-5 rounded-r-lg disabled:opacity-25"
-            style={{ minWidth: "87px", minHeight: "52px" }} // Add this line to set a minimum width
+            style={{ minWidth: "87px", minHeight: "52px" }}
             disabled={!isValidISBN(isbn)}
           >
             {isLoading ? (
